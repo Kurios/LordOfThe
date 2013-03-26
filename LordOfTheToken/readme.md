@@ -16,3 +16,9 @@ In the Land of Mordor where the Shadows lie.
 
  
 
+Deliverables:
+---------------
+ - [ ]	Scanner Generator
+ - [ ]	Test input files : lexical specifications that are input to scanner generator
+ - [ ]	Output files : generated scanner tables (DFA) and the table-walker which will walk the DFA as per the table reading the input to generate tokens. 
+ - [ ]	The driver program.
