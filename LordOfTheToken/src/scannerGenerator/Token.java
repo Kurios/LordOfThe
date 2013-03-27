@@ -31,6 +31,21 @@ public class Token {
 	{
 		//TODO
 	}
+	
+	/***
+	 * 
+	 * @param s, a string of which the first char is used
+	 * @return the token that the string s will lead to, or null, if no token exists
+	 */
+	public Token resolve(String s){
+		//TODO
+		return null;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
 	public String toString()
 	{
 		if(parent == null)
