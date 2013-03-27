@@ -15,12 +15,16 @@ public class ScannerGenerator {
 				if(files[i].length() > 2)
 				{
 					Token t = null;
+					int firstSpace = files[i].indexOf(' ');
+					t = new Token(files[i].substring(0, firstSpace),files[i].substring(firstSpace + 1));
+					tokens.put(files[i].substring(0, firstSpace),t);
+					/*
 					String[] words = files[i].split(" ");
 					for(int j = 0; j < words.length; j++)
 					{
 						if(j == 0)
 						{
-							t = new Token(words[0]);
+							t = new Token(words[0], );
 							tokens.put(words[0],t);
 						}
 						else if(words[j].length() > 0)
@@ -50,6 +54,7 @@ public class ScannerGenerator {
 							
 						}
 					}
+					 */
 				}
 			}
 		}

@@ -6,10 +6,12 @@ public class Token {
 	String name;
 	LinkedList<Object> components = new LinkedList<Object>();
 	Token parent = null;
+	String arg;
 	
-	public Token(String name)
+	public Token(String name, String arg)
 	{
 		this.name = name;
+		this.arg = arg;
 	}
 
 	public void addToken(Token token) {
@@ -23,6 +25,11 @@ public class Token {
 	public void setParent(Token token)
 	{
 		parent = token;
+	}
+	
+	public void compile()
+	{
+		//TODO
 	}
 	public String toString()
 	{
