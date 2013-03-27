@@ -31,6 +31,14 @@ public class Token {
 	{
 		//TODO
 	}
+	
+	
+	
+	public Token resolve(String input){
+		//TODO
+		return null;
+	}
+	
 	public String toString()
 	{
 		if(parent == null)
@@ -38,5 +46,10 @@ public class Token {
 		else{
 			return "{" + name + " Contains" + components.toString() + "child of " + parent.name +"}";
 		}
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
