@@ -3,7 +3,7 @@ package regex;
 import java.util.Arrays;
 
 /***
- * Fragment defined as of the REGEX document defining character classes
+ * Fragment defined as of the REGEX document defining character classes. This also verry verry closely resembles transition requirments.
  * @author Kurios
  *
  */
@@ -38,6 +38,7 @@ public class REPrimitiveFragment {
 					chars[last - 32] = assignment;
 					last++;
 				}
+				chars[last - 32] = assignment;
 			}else if(charArray[i] == '^'){ // We invert it
 				if(i != 0){
 					throw new Exception("Failed to compile, inappropiatly placed '^' in regex");
@@ -52,6 +53,18 @@ public class REPrimitiveFragment {
 		
 	}
 
+	public String combineStr(REPrimitiveFragment frag)
+	{
+		String ret = "[";
+		for(int i = 0; i < chars.length; i++)
+		{
+			if(chars[i] && frag.chars[i])
+			{
+				ret += String.valueOf((char)(i + 32));
+			}
+		}
+		return ret + "]";	
+	}
 	
 	public boolean matches(char c)
 	{

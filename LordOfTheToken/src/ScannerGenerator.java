@@ -57,6 +57,7 @@ public class ScannerGenerator {
 					 */
 				}
 			}
+			for(Iterator<Token> itt = tokens.values().iterator(); itt.hasNext() ; itt.next().compile(tokens) );
 		}
 
 		public String getTokensAsString() {
