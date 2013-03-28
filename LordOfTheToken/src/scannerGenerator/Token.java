@@ -32,12 +32,16 @@ public class Token {
 		//TODO
 	}
 	
-	
-	
-	public Token resolve(String input){
+	/***
+	 * 
+	 * @param s, a string of which the first char is used
+	 * @return the token that the string s will lead to, or null, if no token exists
+	 */
+	public Token resolve(String s){
 		//TODO
 		return null;
 	}
+	
 	
 	public String toString()
 	{
