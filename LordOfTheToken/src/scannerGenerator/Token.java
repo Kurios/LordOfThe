@@ -37,6 +37,7 @@ public class Token {
 	 * @param s, a string of which the first char is used
 	 * @return the token that the string s will lead to, or null, if no token exists
 	 */
+	
 	public Token resolve(String s){
 		//TODO
 		return null;
@@ -53,7 +54,6 @@ public class Token {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 }
