@@ -34,6 +34,8 @@ public class TransTable {
 		}
 	}
 	
+	
+	
 	/**
 	 * Prints the table to the console and an output file named
 	 */
