@@ -59,11 +59,6 @@ public class RENode {
 		}
 		return (RENode[]) ret.toArray();
 	}
-	public String wrappedAddPath(String regex, RENode loopback) throws Exception
-	{
-		
-		return regex;
-	}
 	public boolean addPath(String regex,String goalStateName) throws Exception
 	{
 		REPrimitiveFragment frag;
@@ -72,6 +67,8 @@ public class RENode {
 		if(regex.length() > 0){
 			switch(regex.charAt(0))
 			{
+			case '\\' :
+					regex = regex.substring(1);
 			case '[' : 	
 						for(i = 1; i < regex.length() && regex.charAt(i) != ']' ; i++);
 						frag = new REPrimitiveFragment(regex.substring(1, i));
@@ -85,15 +82,12 @@ public class RENode {
 							case '?': this.addPath(regex.substring(i+2), goalStateName); break;
 							case '*': this.addPath(regex.substring(i+2), goalStateName);
 							case '+': node.add(frag, node); break;
-							case '|': break; //TODO
 							default: node.addPath(regex.substring(i+1), goalStateName);
 							}
 						}else{
 							node.addPath(regex.substring(i+1), goalStateName);
 						}
 						break;
-						
-			case '(' : 	//TODO
 			case '.' : 	frag = new REPrimitiveFragment("^"); 
 						node = new RENode();
 						transitions.add(frag);
@@ -135,5 +129,14 @@ public class RENode {
 			returnValue += goalStateName;
 		}
 		return true;
+	}
+
+	public void merge(RENode node) {
+		// TODO Auto-generated method stub
+		for(int i = 0;i < node.transitions.size(); i++)
+		{
+			transitions.add(node.transitions.get(i));
+			states.add(node.states.get(i));
+		}
 	}
 }

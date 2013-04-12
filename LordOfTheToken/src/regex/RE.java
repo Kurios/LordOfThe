@@ -36,4 +36,27 @@ public class RE {
 		return false;
 	}
 	
+	public void generate(Token t) throws Exception
+	{
+		REGroup g = new REGroup();
+		REGroup working = g;
+		int j = 0;
+		int i = 0;
+		for(j = 0; j < t.display().length() ; j++)
+		{
+			switch(t.display().charAt(i))
+			{
+			case '(' : 	i = j + 1;
+			case ')' : 	working.generate(t.display().substring(i, j), "");
+						working = working.closeGroup(t.display().charAt(j+1),"&");
+						break;
+			case '|' : 	working.generate(t.display().substring(i, j), "");
+						working = working.closeGroup(t.display().charAt(j+1),"|"); 
+						break;
+			}
+		}
+		working.generate(t.display().substring(i, j),t.getName());
+		startState.merge(g.getHead());
+	}
+	
 }
