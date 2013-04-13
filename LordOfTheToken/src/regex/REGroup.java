@@ -24,7 +24,7 @@ public class REGroup {
 		switch (charAt)
 		{
 			case '?': //this.addPath(regex.substring(2), string); break;
-			case '*': //this.addPath(regex.substring(2), string);
+			case '*':  //this.addPath(regex.substring(2), string);
 			case '+': //head.add(head); break;
 		}
 		return null;

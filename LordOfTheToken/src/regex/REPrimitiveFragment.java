@@ -66,6 +66,19 @@ public class REPrimitiveFragment {
 		return ret + "]";	
 	}
 	
+	public String toString()
+	{
+		String ret = "(";
+		for(int i = 0; i < chars.length; i++)
+		{
+			if(chars[i])
+			{
+				ret += String.valueOf((char)(i + 32));
+			}
+		}
+		return ret + ")";	
+	}
+	
 	public boolean matches(char c)
 	{
 		return chars[c - 32];

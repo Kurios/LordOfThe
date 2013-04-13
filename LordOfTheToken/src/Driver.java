@@ -2,6 +2,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+
+import regex.RE;
+import scannerGenerator.Token;
 
 
 public class Driver {
@@ -26,6 +30,24 @@ public class Driver {
 			ScannerGenerator scanner = new ScannerGenerator();
 			scanner.scan(specString);
 			System.out.println(scanner.getTokensAsString());
+			RE re = new RE();
+			for(Iterator<Token> itt = scanner.tokens.values().iterator();itt.hasNext();)
+				re.generate(itt.next());
+			System.out.println("Stuff");
+			System.out.println(re);
+			
+			f = new File(inputFile);
+			reader = new BufferedReader(new FileReader(f));
+			line = reader.readLine();
+			while(line != null)
+			{
+				String[] strs = line.split(" ");
+				for(int i = 0; i<strs.length;i++)
+				{
+					System.out.print("\n" + re.match(strs[i]) + " " + strs[i]);
+				}
+				line = reader.readLine();
+			}
 		}
 		catch ( Exception e)
 		{

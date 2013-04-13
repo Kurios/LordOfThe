@@ -46,7 +46,7 @@ public class RE {
 		{
 			switch(t.display().charAt(i))
 			{
-			case '(' : 	i = j + 1;
+			case '(' : 	i = j + 1; break;
 			case ')' : 	working.generate(t.display().substring(i, j), "");
 						working = working.closeGroup(t.display().charAt(j+1),"&");
 						break;
@@ -59,4 +59,12 @@ public class RE {
 		startState.merge(g.getHead());
 	}
 	
+	public String toString()
+	{
+		return startState.toString();
+	}
+
+	public String match(String string) {
+		return startState.match(string);
+	}
 }

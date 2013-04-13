@@ -75,7 +75,7 @@ public class RENode {
 						node = new RENode();
 						transitions.add(frag);
 						states.add(node);
-						if(regex.length() < i + 1)
+						if(regex.length() > i + 1)
 						{
 							switch(regex.charAt(i+1))
 							{
@@ -85,14 +85,14 @@ public class RENode {
 							default: node.addPath(regex.substring(i+1), goalStateName);
 							}
 						}else{
-							node.addPath(regex.substring(i+1), goalStateName);
+							node.addPath(regex.substring(i), goalStateName);
 						}
 						break;
 			case '.' : 	frag = new REPrimitiveFragment("^"); 
 						node = new RENode();
 						transitions.add(frag);
 						states.add(node);
-						if(regex.length() < 1)
+						if(regex.length() > 1)
 						{
 							switch(regex.charAt(1))
 							{
@@ -111,7 +111,7 @@ public class RENode {
 				node = new RENode();
 				transitions.add(frag);
 				states.add(node);
-				if(regex.length() < 1)
+				if(regex.length() > 1)
 				{
 					switch(regex.charAt(1))
 					{
@@ -138,5 +138,26 @@ public class RENode {
 			transitions.add(node.transitions.get(i));
 			states.add(node.states.get(i));
 		}
+	}
+	
+	public String toString()
+	{
+		return "[ " + " " + returnValue  +  " " + transitions + " ]"; 
+	}
+
+	public String match(String string) {
+		if(string.isEmpty())
+		{
+			return returnValue;
+		}
+		String ret = "";
+		for(int i = 0;i<transitions.size();i++)
+		{
+			if(transitions.get(i).matches(string.charAt(0)))
+			{
+				ret += states.get(i).match(string.substring(1));
+			}
+		}
+		return ret;
 	}
 }
