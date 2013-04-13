@@ -1,6 +1,8 @@
 package regex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 /**
  * The above examples show digits 0 through 9 out of ASCII printable characters define  a character class DIGIT and thus,
@@ -67,22 +69,24 @@ public class RENode {
 		if(regex.length() > 0){
 			switch(regex.charAt(0))
 			{
-			case '\\' :
-					regex = regex.substring(1);
 			case '[' : 	
 						for(i = 1; i < regex.length() && regex.charAt(i) != ']' ; i++);
 						frag = new REPrimitiveFragment(regex.substring(1, i));
 						node = new RENode();
 						transitions.add(frag);
+						i++;
 						states.add(node);
-						if(regex.length() > i + 1)
+						if(regex.length() > i)
 						{
-							switch(regex.charAt(i+1))
+							switch(regex.charAt(i))
 							{
-							case '?': this.addPath(regex.substring(i+2), goalStateName); break;
-							case '*': this.addPath(regex.substring(i+2), goalStateName);
-							case '+': node.add(frag, node); break;
-							default: node.addPath(regex.substring(i+1), goalStateName);
+							case '?': this.addPath(regex.substring(i+1), goalStateName); break;
+							case '*': this.addPath(regex.substring(i+1), goalStateName);
+							case '+': 
+							node.add(frag, node); 
+							node.addPath(regex.substring(i+1), goalStateName);
+							break;
+							default: node.addPath(regex.substring(i), goalStateName);
 							}
 						}else{
 							node.addPath(regex.substring(i), goalStateName);
@@ -105,9 +109,11 @@ public class RENode {
 							node.addPath(regex.substring(2), goalStateName);
 						}
 						break;
+			case '\\' :
+				regex = regex.substring(1);
 			default  :	
 				//for(i = 1; i < regex.length() && regex.charAt(i) != ']' ; i++);
-				frag = new REPrimitiveFragment(regex.substring(0, 0));
+				frag = new REPrimitiveFragment(regex.substring(0, 1));
 				node = new RENode();
 				transitions.add(frag);
 				states.add(node);
@@ -117,8 +123,9 @@ public class RENode {
 					{
 					case '?': this.addPath(regex.substring(2), goalStateName); break;
 					case '*': this.addPath(regex.substring(2), goalStateName);
-					case '+': node.add(frag, node);
-					default: node.addPath(regex.substring(2), goalStateName);
+					case '+':   node.add(frag, node); 
+								node.addPath(regex.substring(1), goalStateName);break;
+					default: node.addPath(regex.substring(1), goalStateName);
 					}
 				}else{
 					node.addPath(regex.substring(1), goalStateName);
@@ -142,7 +149,28 @@ public class RENode {
 	
 	public String toString()
 	{
-		return "[ " + " " + returnValue  +  " " + transitions + " ]"; 
+		HashSet<RENode> set = new HashSet<RENode>();
+		set.add(this);
+		String ret =  "[ " + " " + returnValue  +  " ";
+		for(int i = 0;i<transitions.size();i++)
+		{
+			ret += " " + transitions.get(i) + " ->" + states.get(i).toString(set);
+		}
+		return ret + " ]"; 
+	}
+	
+	public String toString(HashSet<RENode> table)
+	{
+		String ret =  "[ " + " " + returnValue  +  " ";
+		if(!table.contains(this))
+		{
+			table.add(this);
+			for(int i = 0;i<transitions.size();i++)
+			{
+				ret += " " + transitions.get(i) + " ->" + states.get(i).toString(table);
+			}	
+		}
+		return ret + " ]\n";
 	}
 
 	public String match(String string) {
@@ -159,5 +187,17 @@ public class RENode {
 			}
 		}
 		return ret;
+	}
+
+	public void addtoLast(RENode node, REPrimitiveFragment frag) {
+		if(transitions.size() > 0)
+		{
+			for(int i = 0;i<transitions.size();i++)
+			{
+				states.get(i).addtoLast(node,frag);
+			}
+		}else{
+			this.add(frag, node);
+		}
 	}
 }

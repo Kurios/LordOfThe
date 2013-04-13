@@ -1,0 +1,5 @@
+java -jar LordOfTheToken
+-- Run on SampleInput and SampleSpec
+
+java -jar LordOfTheToken <SampleSpec> <SampleInput>
+--Obvious
