@@ -44,6 +44,9 @@ public class GRule{
 
 	public void generateTokens(LinkedList<GToken> tokens) {
 		
+		RE
+		String[] strTokens = rule.split(" ");
+		
 	}
 
 }
