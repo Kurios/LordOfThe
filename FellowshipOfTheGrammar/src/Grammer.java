@@ -39,6 +39,12 @@ public class Grammer {
 		}
 	}
 	
+	public void makeFirstAndFollowSet(){
+		for(GToken t : tokens){
+			if(t.isTerminal()) t.first.add(t);
+		}
+	}
+	
 	
 	
 	//Sources:
@@ -117,12 +123,12 @@ int main(int argc, char **argv)
                         cout << "Rule " << table[ss.top()][lexer(*p)] << endl;
                         switch(table[ss.top()][lexer(*p)])
                         {
-                                case 1: // 1. S ¨ F
+                                case 1: // 1. S ï¿½Â¨ F
                                         ss.pop();
                                         ss.push(NTS_F); // F
                                         break;
  
-                                case 2: // 2. S ¨ (S + F)
+                                case 2: // 2. S ï¿½Â¨ (S + F)
                                         ss.pop();
                                         ss.push(TS_R_PARENS);   // )
                                         ss.push(NTS_F);         // F
@@ -131,7 +137,7 @@ int main(int argc, char **argv)
                                         ss.push(TS_L_PARENS);   // (
                                         break;
  
-                                case 3: // 3. F ¨ a
+                                case 3: // 3. F ï¿½Â¨ a
                                         ss.pop();
                                         ss.push(TS_A);  // a
                                         break;
