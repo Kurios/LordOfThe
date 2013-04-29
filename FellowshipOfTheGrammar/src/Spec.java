@@ -35,6 +35,7 @@ public class Spec {
 			//re.generate(itt.next());
 		}
 		
+		reader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

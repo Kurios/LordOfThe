@@ -1,28 +1,41 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
-
-
+import java.util.regex.*;
 public class Grammer {
 
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
 	public Grammer(File grammer, Spec s) {
 		// TODO Generate LL(1) Parser
-		boolean hasLine = false;
-		//TODO Convert file to string
-		while(hasLine)
-		{
-			//For each line
-			GRule rule = new GRule();
-			while(rule.canNormalize())
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(grammer));
+			String line = reader.readLine();
+		
+			while(line != null)
 			{
-				rules.add(rule.normalize());
+				//For each line
+				GRule rule = new GRule(line);
+				while(rule.canNormalize())
+				{
+					rules.add(rule.normalize());
+				}
+				rules.add(rule);
+				//This in theory gives us a set of rules that are normalized, ie: our | is implied by creating a new rule.
+				
+				//We generate a first set. Then we generate a follow set. Then we generate a demon magic table. Fuck our lives.
+				line = reader.readLine();
 			}
-			rules.add(rule);
-			//This in theory gives us a set of rules that are normalized, ie: our | is implied by creating a new rule.
-			
-			//We generate a first set. Then we generate a follow set. Then we generate a demon magic table. Fuck our lives.
-			
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

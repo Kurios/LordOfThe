@@ -12,7 +12,7 @@ public class FellowshipOfTheGrammar {
 		
 		if(args.length == 0)
 		{
-			grammer = new File("grammer.txt");
+			grammer = new File("grammar.txt");
 			spec = new File("spec.txt");
 			script = new File("script.txt");	
 		}
