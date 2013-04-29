@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.regex.*;
 public class Grammer {
 
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
@@ -28,6 +27,11 @@ public class Grammer {
 				
 				//We generate a first set. Then we generate a follow set. Then we generate a demon magic table. Fuck our lives.
 				line = reader.readLine();
+			}
+			
+			for(GRule r : rules)
+			{
+				r.generateTokens(tokens);
 			}
 			reader.close();
 		} catch (IOException e) {
