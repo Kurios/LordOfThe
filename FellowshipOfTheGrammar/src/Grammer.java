@@ -97,8 +97,61 @@ public class Grammer {
 				}
 				
 				
-				for(int i = 0; i <r.tokenList.size(); i++){
-					
+				
+				int k = r.tokenList.size() - 1;
+				//for i = 1 to k   except we subtracted 1 from both i and k
+				for(int i = 0; i <= k; i++){
+					//for j = i+1 to k
+					for(int j = i+1; j <= k; j++){
+						//if i=1 or {Y(1),...,Y(i-1)} subset of nullable then
+						boolean subsetOfNull = true;
+						for(int ind = 0; ind < i; ind++){
+							if(!nullable.contains(r.tokenList.get(ind))) subsetOfNull = false;
+						}
+						//first(X) = first(X) union first(Y(i))
+						if(i == 0 || subsetOfNull){
+							for(GToken t : r.tokenList.get(i).first){
+								if(!tokens.get(headIndex).first.contains(t)){
+									tokens.get(headIndex).first.add(t);
+									firstChanged = true;
+								}
+							}
+						}
+						
+						//if i=k or {Y(i+1),...Y(k)} subset of nullable then
+						//        follow(Y(i)) = follow(Y(i)) union follow(X)
+						subsetOfNull = true;
+						for(int ind = i+1; ind <= k; ind++){
+							if(!nullable.contains(r.tokenList.get(ind))) subsetOfNull = false;
+						}
+						if(i == k || subsetOfNull){
+							int yIndex = tokens.indexOf(r.tokenList.get(i));
+							for(GToken t : tokens.get(headIndex).follow){
+								if(!tokens.get(yIndex).follow.contains(t)){
+									tokens.get(yIndex).follow.add(t);
+									followChanged = true;
+								}
+							}
+						}
+						
+						//if i+1=j or {Y(i+1),...,Y(j-1)} subset of nullable then
+				        //		 follow(Y(i)) = follow(Y(i)) union first(Y(j))
+						subsetOfNull = true;
+						for(int ind = i+1; ind <= j-1; ind++){
+							if(!nullable.contains(r.tokenList.get(ind))) subsetOfNull = false;
+						}
+						if(i+1 == j || subsetOfNull){
+							int iIndex = tokens.indexOf(r.tokenList.get(i));
+							int jIndex = tokens.indexOf(r.tokenList.get(j));
+							for(GToken t : tokens.get(jIndex).first){
+								if(!tokens.get(iIndex).follow.contains(t)){
+									tokens.get(iIndex).follow.addLast(t);
+									followChanged = true;
+								}
+							}
+						}
+						
+					}
 				}
 				
 				
