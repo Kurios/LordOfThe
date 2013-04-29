@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class REPrimitiveFragment {
 	
-	boolean chars[] = new boolean[126 - 32];
+	boolean chars[] = new boolean[126 - 31];
 	
 	/***
 	 * Takes in a definition for a character class, as per regex standard

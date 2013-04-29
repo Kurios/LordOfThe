@@ -3,12 +3,31 @@ import java.io.File;
 
 public class FellowshipOfTheGrammar {
 
-	public static void main(String[] arrrrrrrrggs)//Yes, we start like a pirate! Yar!
+	public static void main(String[] args)//Yes, we start like a pirate! Yar!
 	{
 		//TODO Turn Strings to files
-			File grammer = null;
-			File script = null;
-			File spec = null;
+		File grammer = null;
+		File spec = null;
+		File script = null;
+		
+		if(args.length == 0)
+		{
+			grammer = new File("grammer.txt");
+			spec = new File("spec.txt");
+			script = new File("script.txt");	
+		}
+		else if(args.length == 3)
+		{
+			grammer = new File(args[0]);
+			spec = new File(args[1]);
+			script = new File(args[2]);
+		}
+		else if(args.length != 3)
+		{
+			System.out.println("We need 3 input files");
+			return;
+		}
+
 		
 		Spec s = new Spec(spec);
 		Grammer g = new Grammer(grammer,s);
