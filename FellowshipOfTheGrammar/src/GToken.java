@@ -30,7 +30,7 @@ public class GToken extends SpecToken {
   
   public String toString()
   {
-	  String ret = "GToken: Name:" + this.token + " Rules: " + this.rules;
+	  String ret = "GToken:( Name:" + this.token + " Rules: " + this.rules + " First: " + this.first + " Follow: " + this.follow + " ) ";
 	  return ret;
   }
 
