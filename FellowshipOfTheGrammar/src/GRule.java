@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.*;
 
-public class GRule {
+public class GRule{
 	
 	String name = "";
 	String rule = "";
+	ArrayList<GToken> tokenList;
 
 	public GRule(String line) {
 		//System.out.println(line);
@@ -21,19 +24,26 @@ public class GRule {
 	}
 
 	public boolean canNormalize() {
-		if(rule.matches(".*|.*"))
-			return false; //TODO FIX THIS. RETURNS TRUE or TRUE
+		if(rule.matches(".*\\|.*"))
+		{
+			//System.out.println("match found in "+rule);
+			return true;
+		}
 		return false;
 	}
 
 	public GRule normalize() {
 		if(canNormalize())
 		{
-			String[] s = rule.split(" *| *", 2);
+			String[] s = rule.split(" *\\| *", 2);
 			rule = s[1];
 			return new GRule(name, s[0]);
 		}
 		return null;
+	}
+
+	public void generateTokens(LinkedList<GToken> tokens) {
+		
 	}
 
 }
