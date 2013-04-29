@@ -6,13 +6,13 @@ public class GRule{
 	
 	String name = "";
 	String rule = "";
-	ArrayList<GToken> tokenList;
+	ArrayList<GToken> tokenList = new ArrayList<GToken>();
 
 	public GRule(String line) {
 		//System.out.println(line);
 		String[] lines = line.split(" ::= ");
 		name = lines[0];
-		rule = lines[1];
+		rule = lines[1].replace(">", "> ");
 		System.out.println("name = "+name + " rule = " + rule);
 	}
 	
@@ -43,10 +43,42 @@ public class GRule{
 	}
 
 	public void generateTokens(LinkedList<GToken> tokens) {
+		GToken us = null;
+		//First we find ourselves.
+		for(GToken t : tokens)
+		{
+			if(t.token.equalsIgnoreCase(name)){
+				us = t;
+				break;
+			}
+		}
+		if(us == null){
+			us = new GToken(name,true);
+			tokens.add(us);
+		}
+		//Then we add us to us.
+		us.rules.add(this);
 		
-		RE
-		String[] strTokens = rule.split(" ");
-		
+		//Then we add all its rules.
+		for(String s : rule.split(" +")){
+			GToken tar = null;
+			for(GToken t : tokens)
+			{
+				if(s.equalsIgnoreCase(name)){
+					tar = t;
+					break;
+				}
+			}
+			if(tar == null){
+				tar = new GToken(name,true);
+			tokenList.add(tar);
+			}
+		}
+	}
+	
+	public String toString()
+	{
+		return "GRule : " + rule;
 	}
 
 }

@@ -29,11 +29,15 @@ public class Grammer {
 				//We generate a first set. Then we generate a follow set. Then we generate a demon magic table. Fuck our lives.
 				line = reader.readLine();
 			}
-			
+			for(SpecToken t : s.tokens)
+			{
+				tokens.add(new GToken(t));
+			}
 			for(GRule r : rules)
 			{
 				r.generateTokens(tokens);
 			}
+			System.out.println(tokens);
 			reader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

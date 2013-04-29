@@ -27,6 +27,12 @@ public class GToken extends SpecToken {
     return terminal;
   }
 
+  
+  public String toString()
+  {
+	  String ret = "GToken: Name:" + this.token + " Rules: " + this.rules;
+	  return ret;
+  }
 
 
 }
