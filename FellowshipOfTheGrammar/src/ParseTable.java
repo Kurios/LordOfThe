@@ -36,4 +36,16 @@ public class ParseTable
 		}
 		*/
 	}
+	public GRule getCell(GToken a,GToken b)
+	{
+		return table.get(reference.indexOf(a)).get(b); //which returns the rule you do
+		
+	}
+	public String toString()
+	{
+		String ret="";
+		ret+="hi";
+		return " ";
+		
+	}
 }
