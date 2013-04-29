@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 public class Grammer {
 
@@ -44,9 +45,24 @@ public class Grammer {
 	}
 	
 	public void makeFirstAndFollowSet(){
+		ArrayList<GToken> nullable = new ArrayList<GToken>();
 		for(GToken t : tokens){
 			if(t.isTerminal()) t.first.add(t);
+			else {
+				t.first.clear();
+				t.follow.clear();
+			}
 		}
+		boolean firstChanged = true, followChanged = true, nullChanged = true; 
+		while(firstChanged || followChanged || nullChanged){
+			firstChanged = false;
+			followChanged = false;
+			nullChanged = false;
+			for(GRule rule: rules){
+				
+			}
+		}
+		
 	}
 	
 	
