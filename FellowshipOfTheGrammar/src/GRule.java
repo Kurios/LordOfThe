@@ -7,6 +7,7 @@ public class GRule{
 	String name = "";
 	String rule = "";
 	ArrayList<GToken> tokenList = new ArrayList<GToken>();
+	GToken self = null;
 
 	public GRule(String line) {
 		//System.out.println(line);
@@ -43,21 +44,21 @@ public class GRule{
 	}
 
 	public void generateTokens(LinkedList<GToken> tokens) {
-		GToken us = null;
+		//GToken us = null;
 		//First we find ourselves.
 		for(GToken t : tokens)
 		{
 			if(t.token.equalsIgnoreCase(name)){
-				us = t;
+				self = t;
 				break;
 			}
 		}
-		if(us == null){
-			us = new GToken(name,true);
-			tokens.add(us);
+		if(self == null){
+			self = new GToken(name,true);
+			tokens.add(self);
 		}
 		//Then we add us to us.
-		us.rules.add(this);
+		self.rules.add(this);
 		
 		//Then we add all its rules.
 		for(String s : rule.split(" +")){

@@ -7,7 +7,7 @@ public class SpecToken {
 
 	public SpecToken(String token,String pattern)
 	{
-		this.token = token;
+		this.token = token.replace("$", "");
 		this.pattern = pattern;
 	}
 	

@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 public class Grammer {
-
+	public GToken start;
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
 	public Grammer(File grammer, Spec s) {
 		// TODO Generate LL(1) Parser
-		
+		tokens.add(new GToken("<epsilon>",true));
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(grammer));
 			String line = reader.readLine();
@@ -31,12 +31,22 @@ public class Grammer {
 			}
 			for(SpecToken t : s.tokens)
 			{
-				tokens.add(new GToken(t));
+				tokens.add(new GToken(t));//Fuck
 			}
 			for(GRule r : rules)
 			{
 				r.generateTokens(tokens);
 			}
+			GRule tstart = rules.get(0);
+			for(GToken t : tokens)
+			{
+				if(t.token.equalsIgnoreCase(tstart.name))
+				{
+					start = t;
+					break;
+				}
+			}
+			System.out.println(start);
 			System.out.println(tokens);
 			reader.close();
 		} catch (IOException e) {
