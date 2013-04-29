@@ -73,6 +73,36 @@ public class Grammer {
 			followChanged = false;
 			nullChanged = false;
 			for(GRule rule: rules){
+				GToken head = rule.tokenList.get(0);
+				GRule r = rule;
+				r.tokenList.remove(0);
+				int headIndex = tokens.indexOf(head);
+				
+				//if k=0 then nullable = nullable union x
+				if(r.tokenList.size() == 0) {
+					nullable.add(head);
+					nullChanged = true;
+					continue;
+				}
+				
+				//if {Y(1),...,Y(k)} subset of nullable then nullable = nullable union x
+				boolean subsetOfNullable = true;
+				for(GToken checkNull : r.tokenList){
+					if(!nullable.contains(checkNull)) subsetOfNullable = false;
+				}
+				if(subsetOfNullable) {
+					nullable.add(head);
+					nullChanged = true;
+					continue;
+				}
+				
+				
+				for(int i = 0; i <r.tokenList.size(); i++){
+					
+				}
+				
+				
+				
 				
 			}
 		}
