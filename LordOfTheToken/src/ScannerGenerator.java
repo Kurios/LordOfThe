@@ -1,5 +1,6 @@
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import scannerGenerator.*;
 
@@ -11,7 +12,7 @@ public class ScannerGenerator {
 		{
 			boolean care = false;
 			String[] files = file.split("\n");
-			for(int i = 0; i < files.length; i++)
+			for(int i = 1; i < files.length; i++)
 			{
 				if(files[i].length() > 2)
 				{
@@ -62,10 +63,19 @@ public class ScannerGenerator {
 				}
 			}
 			for(Iterator<Token> itt = tokens.values().iterator(); itt.hasNext() ; itt.next().compile(tokens) );
+			LinkedList<String> toKill = new LinkedList<String>();
 			for(Iterator<String> itt = tokens.keySet().iterator(); itt.hasNext() ;  )
 			{
 				String s = itt.next();
-				if(!tokens.get(s).care)tokens.remove(s);
+				if(!tokens.get(s).care)
+					{
+						toKill.add(s);
+					}
+			}
+			for(String s : toKill)
+			{
+				tokens.remove(s);
+				System.out.println("not considering " + s);
 			}
 
 		}

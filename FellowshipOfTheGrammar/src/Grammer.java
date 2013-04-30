@@ -356,16 +356,51 @@ int main(int argc, char **argv)
 			while(line != null)
 			{
 				//We attempt to make a queue of terminals
-				line = reader.readLine();
 				for(String s : line.split(" +"))
 				{
 					if(line.length() > 0)
 					{
+						boolean added = false;
 						for(GToken t : terminals){
-							if(t.matches(s))queue.add(t);
+							if(t.matches(s))
+							{
+								queue.add(t);
+								added = true;
+								break;
+							}
+							else // we slide along back, looking for a greedy match.
+							{
+								
+								int br = s.length();
+								while(br > 0)
+								{
+									boolean match = false;
+									for(GToken tr : terminals){
+										if(tr.matches(s.substring(0, br)))
+										{
+											queue.add(tr);
+											match = true;
+											
+											break;
+										}
+									}
+									if(match)
+									{
+										System.out.println("MATCHED " + queue.peekLast() + " WITH " + s);
+										s = s.substring(br);
+										br = s.length();
+										if(br > 0) match = false;
+									}else{
+										br--;
+									}
+								}
+							}
 						}
+						if(!added)System.out.println("NO MATCH FOR: " + s);
+						else System.out.println("MATCHED " + queue.peekLast() + " WITH " + s);
 					}
 				}
+				line = reader.readLine();
 				
 			}
 			System.out.println(queue);
