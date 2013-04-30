@@ -49,7 +49,8 @@ public class Grammer {
 			System.out.println(start);
 			System.out.println(tokens);
 			System.out.println(start);
-			makeFirstAndFollowSet();
+			//makeFirstAndFollowSet();
+			System.out.println(start.rules);
 			System.out.println("HALP ME: " + tokens.get(1));
 			
 			//System.out.println(tokens);
