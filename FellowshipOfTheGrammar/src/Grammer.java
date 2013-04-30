@@ -56,7 +56,8 @@ public class Grammer {
 				createFirstSet(t);
 			}
 			System.out.println(start.rules);
-			System.out.println("HALP ME: " + tokens.get(1));
+			System.out.println("\n" + tokens.get(32));
+			System.out.println("" + tokens.get(32).first);
 			
 			//System.out.println(tokens);
 			reader.close();
@@ -183,11 +184,15 @@ public class Grammer {
 					continue;
 				}
 				for(GToken rt: r.tokenList){
-					if(rt.isTerminal()){
+					if(rt.equals(t)) continue;
+					else if(rt.isTerminal()){
 						t.first.add(rt);
+						break;
 					}
 					else if(!rt.firstSetMade){
-						createFirstSet(rt);
+						createFirstSet(tokens.get(tokens.indexOf(rt)));
+						rt.first = tokens.get(tokens.indexOf(rt)).first;
+						rt.firstSetMade = true;
 						for(GToken f : rt.first){
 							if(t.first.contains(f)) continue;
 							else t.first.add(f);
@@ -208,6 +213,17 @@ public class Grammer {
 				}
 			}
 			t.firstSetMade = true;
+	}
+	
+	public void createFollowSet(GToken t){
+		if(t.followSetMade) return;
+		if(t.equals(start)){
+			t.follow.add(new GToken("<$>", false));
+		}
+		
+		if(true);
+		
+		t.followSetMade  = true;
 	}
 	
 	public int indexOfToken(GToken token){

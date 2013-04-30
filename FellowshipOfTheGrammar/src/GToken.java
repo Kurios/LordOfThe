@@ -26,6 +26,8 @@ public class GToken extends SpecToken {
   //Rules beginning with this token (i.e. A ::= stuff* stores in token A)
   ArrayList<GRule> rules = new ArrayList<GRule>();
 
+public boolean followSetMade = false;
+
   public boolean isTerminal(){
     return terminal;
   }
