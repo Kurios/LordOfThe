@@ -13,6 +13,7 @@ public class Token extends TString{
 	String arg;
 	LinkedList<TString> regex = new LinkedList<TString>();
 	String combined = "";
+	public boolean care = false;
 	
 	public Token(String name, String arg)
 	{

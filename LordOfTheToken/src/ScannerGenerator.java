@@ -9,6 +9,7 @@ public class ScannerGenerator {
 	
 		void scan(String file) throws Exception
 		{
+			boolean care = false;
 			String[] files = file.split("\n");
 			for(int i = 0; i < files.length; i++)
 			{
@@ -17,6 +18,7 @@ public class ScannerGenerator {
 					Token t = null;
 					int firstSpace = files[i].indexOf(' ');
 					t = new Token(files[i].substring(0, firstSpace),files[i].substring(firstSpace + 1));
+					t.care = care;
 					tokens.put(files[i].substring(0, firstSpace),t);
 					/*
 					String[] words = files[i].split(" ");
@@ -55,9 +57,17 @@ public class ScannerGenerator {
 						}
 					}
 					 */
+				}else{
+					care = true;
 				}
 			}
 			for(Iterator<Token> itt = tokens.values().iterator(); itt.hasNext() ; itt.next().compile(tokens) );
+			for(Iterator<String> itt = tokens.keySet().iterator(); itt.hasNext() ;  )
+			{
+				String s = itt.next();
+				if(!tokens.get(s).care)tokens.remove(s);
+			}
+
 		}
 
 		public String getTokensAsString() {

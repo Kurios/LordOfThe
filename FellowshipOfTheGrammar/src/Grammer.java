@@ -7,6 +7,7 @@ import java.util.LinkedList;
 public class Grammer {
 	public GToken start;
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
+	public LinkedList<GToken> terminals = new LinkedList<GToken>();
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
 	public Grammer(File grammer, Spec s) {
 		// TODO Generate LL(1) Parser
@@ -31,7 +32,9 @@ public class Grammer {
 			}
 			for(SpecToken t : s.tokens)
 			{
-				tokens.add(new GToken(t));//Fuck
+				GToken z = new GToken(t);
+				tokens.add(z);//Fuck
+				terminals.add(z);
 			}
 			for(GRule r : rules)
 			{
@@ -285,8 +288,30 @@ int main(int argc, char **argv)
         return 0;
 }
 	 */
+	public GToken generateTerminal(String s)
+	{
+		return null;
+	}
+	
 	public boolean matchesFile(File script) {
-		// TODO Auto-generated method stub
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(script));
+			String line = reader.readLine();
+			LinkedList<GToken> queue = new LinkedList<GToken>();
+			
+			while(line != null)
+			{
+				//We attempt to make a queue of terminals
+				line = reader.readLine();
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
