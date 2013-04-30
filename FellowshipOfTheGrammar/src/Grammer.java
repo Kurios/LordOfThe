@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 public class Grammer {
 	public GToken start;
+	
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
 	public LinkedList<GToken> terminals = new LinkedList<GToken>();
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
@@ -340,8 +341,18 @@ int main(int argc, char **argv)
 			{
 				//We attempt to make a queue of terminals
 				line = reader.readLine();
+				for(String s : line.split(" +"))
+				{
+					if(line.length() > 0)
+					{
+						for(GToken t : terminals){
+							if(t.matches(s))queue.add(t);
+						}
+					}
+				}
 				
 			}
+			System.out.println(queue);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
