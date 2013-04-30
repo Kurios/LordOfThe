@@ -6,11 +6,12 @@ public class GToken extends SpecToken {
 
   public GToken(String token, boolean terminal) {
     super(token, token);
-    this.terminal = terminal;
+    this.terminal = !terminal;
   }
 
   public GToken(SpecToken t){
-    this(t.token, true);
+    this(t.token, false);
+    this.terminal = true;
     this.pattern = t.pattern;
   }
 
@@ -27,10 +28,15 @@ public class GToken extends SpecToken {
     return terminal;
   }
 
+  public boolean equals(GToken token){
+	  return token.token.equalsIgnoreCase(this.token);
+  }
   
   public String toString()
   {
-	  String ret = "GToken:( Name:" + this.token + " Rules: " + this.rules + " First: " + this.first + " Follow: " + this.follow + " ) ";
+	  String ret = "GToken:( Name:" + this.token + " Rules: " + this.rules + " First: "; 
+			  ret+= this.first + " Follow: " ;
+					  ret+= this.follow + " ) ";
 	  return ret;
   }
 
