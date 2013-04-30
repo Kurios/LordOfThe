@@ -61,7 +61,11 @@ public class REPrimitiveFragment {
 		{
 			if(chars[i] && frag.chars[i])
 			{
-				ret += String.valueOf((char)(i + 32));
+				if(i == 91 - 32 ) ret += "\\[";
+				else if(i == 93 - 32) ret += "\\]";
+				else if(i == 94 - 32) ret += "\\^";
+				else if(i == 92 - 32) ret += "\\\\";
+				else ret += String.valueOf((char)(i + 32));
 			}
 		}
 		return ret + "]";	

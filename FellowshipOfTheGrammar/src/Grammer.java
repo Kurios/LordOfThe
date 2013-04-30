@@ -47,6 +47,8 @@ public class Grammer {
 				}
 			}
 			System.out.println(start);
+			System.out.println(tokens);
+			System.out.println(start);
 			makeFirstAndFollowSet();
 			System.out.println(tokens);
 			reader.close();

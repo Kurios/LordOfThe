@@ -14,14 +14,14 @@ public class GRule{
 		String[] lines = line.split(" ::= ");
 		name = lines[0];
 		rule = lines[1].replace(">", "> ");
-		System.out.println("name = "+name + " rule = " + rule);
+		//System.out.println("name = "+name + " rule = " + rule);
 	}
 	
 	public GRule(String name, String line) {
 		//System.out.println(line);
 		this.name = name;
 		this.rule = line;
-		System.out.println("name = "+name + " rule = " + rule);
+		//System.out.println("name = "+name + " rule = " + rule);
 	}
 
 	public boolean canNormalize() {
@@ -61,25 +61,43 @@ public class GRule{
 		self.rules.add(this);
 		
 		//Then we add all its rules.
-		for(String s : rule.split(" +")){
-			GToken tar = null;
-			for(GToken t : tokens)
-			{
-				if(s.equalsIgnoreCase(name)){
-					tar = t;
-					break;
+		//System.out.println(rule);
+		
+		for(String s : rule.split(" ")){
+			if(s.length() > 0){
+				System.out.print(" \""+s+"\"");
+				boolean term = true;
+				if(s.charAt(0)=='<') term = false;
+				GToken tar = null;
+				//System.out.println(tokens);
+				for(GToken t : tokens)
+				{
+					
+					if(t.token.equalsIgnoreCase(s)){
+						tar = t;
+						break;
+					}
+					if(term && (t.matches(s) && !t.token.equalsIgnoreCase("<epsilon>")))
+					{
+						tar = t;
+						break;
+					}
 				}
-			}
-			if(tar == null){
-				tar = new GToken(name,true);
-			tokenList.add(tar);
+				if(tar == null){
+					tar = new GToken(s,true);
+					//System.out.println("created: " + s);
+					tokens.add(tar);
+				}
+				tokenList.add(tar);
 			}
 		}
+		//System.out.println("");	
+		//System.out.println("created: " + name + " : " + tokenList);
 	}
 	
 	public String toString()
 	{
-		return "GRule : " + rule;
+		return "GRule : " + tokenList;
 	}
 
 }
