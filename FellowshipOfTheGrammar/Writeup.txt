@@ -1,0 +1,17 @@
+Jack Morgan Maxwell McRae Michael Zipp
+
+a) A brief description of how you have implemented each part of the project.
+Java. See README for how we implemented.
+b) Any assumptions you have made.
+We assumed there was no left recursion, that the spaces in the grammar readin were consistanto the input to resolve spaces, and the space between parens and first letter in some places were removed. We made slight changes 
+
+c) Any problems you faced, and any module you were not able to implement (if at all) and why.
+We have been sitting in a room together for the last twenty-four hours coding, leaving only for finals, to use the bathrooms and food. We have learned deep lessons about each other, and important life lessons for our bright shining coding futures. We explored every intimate recess of an LL(1) parser, from the coy First set that had us revisit the jovial freshman year in all its recursive-imbued glory to a massive amalgimation of HashMaps and LinkedLists that reminded each of us of the trying times of 2200. We teased and prodded our parse table with exotic combinations of for and if statments, teasing out a not only reliable but also readable script, which also managed to fit neatly on only a few lines, hiding just beneath the code in the intricate, profanity riddled comments detailed explanations of each iteration we tried. 
+
+Jack encountered problems he never expected to deal with, with the terminals and nonterminating terms rife with spaces in a suprisingly inconsistant manner in the input.txt files, almost toying with our desperate pleas for them to organize themselves into java objects, so that we could weave them intricatley between our various LinkedList objects used to govern with a firm and steady hand the delicate functions and methods handling all parts of the parser. Towards the end we were forced to abandon good coding princibles such as optimization and clear variable names in our careful battle, no, dance with the rigid, unyielding paramaters of this project.
+
+Zipp had the most frustrating task of all, a constant battle which he repeatedly reminded us, nay the building, of the complexity between implementing first and follow sets. We carefully poured over every scrap of information we could find on the vast plains of the internet, going from the great and friendly lands of wikipedia to the dark, half finished websites of students taken with bouts of insanity, creating a brilliant thesis towards the creation of a First set but abrubtly ending before explaining how a corresponding follow set could be created.
+
+Time constraints prevented us from toStrings
+d) Test Cases.
+Working on it.
