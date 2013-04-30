@@ -61,4 +61,29 @@ public class ParseTable
 		return " ";
 		
 	}
+	public void interpret(LinkedList<GToken> input,GToken start)//takes in a goddamn stack n a fucking input
+	{
+		//stack starts with start token/symbol and an ending symbol
+		LinkedList<GToken> stack=new LinkedList<GToken>();
+		GToken end=new GToken("<END_STRING>",true);
+		stack.addFirst(end);
+		stack.addFirst(start);
+		while(!stack.get(0).equals(end))//fix
+		{
+			GToken compare=stack.get(0);//is this zero?
+			GRule toRun=getCell(compare,input.pop());//this shit all psudo, should
+			//be the compare thingy colum goto row.
+			//push the shit onto the stack
+			//for (GToken t:toRun.tokenList)
+			//for(int i=toRun.tokenList.size()-1;i<0;i--)
+			int i=toRun.tokenList.size()-1;
+			while(i>0)
+			{
+				
+				stack.addFirst(toRun.tokenList.get(i));
+				i--;
+			}
+		}
+		
+	}
 }
