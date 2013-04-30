@@ -10,6 +10,8 @@ public class Grammer {
 	public LinkedList<GToken> tokens = new LinkedList<GToken>();
 	public LinkedList<GToken> terminals = new LinkedList<GToken>();
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
+
+	public GToken epTok = new GToken("<epsilon>",false);
 	public Grammer(File grammer, Spec s) {
 		// TODO Generate LL(1) Parser
 		tokens.add(new GToken("<epsilon>",false));
@@ -47,6 +49,8 @@ public class Grammer {
 				if(t.token.equalsIgnoreCase(tstart.name))
 				{
 					start = t;
+					
+					start.follow.add(new GToken("<END_STRING>", false));
 					break;
 				}
 			}
@@ -57,8 +61,8 @@ public class Grammer {
 				createFirstSet(t);
 			}
 			System.out.println(start.rules);
-			System.out.println("\n" + tokens.get(32));
-			System.out.println("" + tokens.get(32).first);
+			System.out.println("\nHALP ME\n" + tokens.get(24));
+			System.out.println("" + tokens.get(24).follow);
 			
 			//System.out.println(tokens);
 			reader.close();
@@ -216,15 +220,41 @@ public class Grammer {
 			t.firstSetMade = true;
 	}
 	
-	public void createFollowSet(GToken t){
-		if(t.followSetMade) return;
-		if(t.equals(start)){
-			t.follow.add(new GToken("<$>", false));
+	public void createFollowSet(GRule r){
+		for(int tInd = 1; tInd <r.tokenList.size(); tInd++){
+			if(r.tokenList.get(tInd).isTerminal()) continue;
+			else{
+				if(! (tInd +1 < r.tokenList.size())) continue;
+				if(r.tokenList.get(tInd+1).isTerminal()){
+					if(!r.tokenList.get(tInd).follow.contains(r.tokenList.get(tInd+1)))
+						r.tokenList.get(tInd).follow.add(r.tokenList.get(tInd+1));
+					break;
+				}
+				else if( r.tokenList.get(tInd+1).first.contains(epTok) ){
+					
+					for(GToken tf : r.tokenList.get(tInd+1).first){
+						if(r.tokenList.get(tInd).follow.contains(tf)) continue;
+						else if(tf.equals(epTok )) continue;
+						else r.tokenList.get(tInd).follow.addLast(tf);
+					}
+					
+					for(GToken tf : r.self.follow){
+						if(r.tokenList.get(tInd).follow.contains(tf)) continue;
+						else r.tokenList.get(tInd).follow.addLast(tf);
+					}
+					
+				}
+				else if(! r.tokenList.get(tInd+1).first.contains(epTok)){
+					for(GToken tf : r.tokenList.get(tInd+1).first){
+						if(r.tokenList.get(tInd).follow.contains(tf)) continue;
+						else if(tf.equals(epTok)) continue;
+						else r.tokenList.get(tInd).follow.addLast(tf);
+					}
+				}
+				
+			}
+			
 		}
-		
-		if(true);
-		
-		t.followSetMade  = true;
 	}
 	
 	public int indexOfToken(GToken token){
