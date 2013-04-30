@@ -61,15 +61,17 @@ public class ParseTable
 		return " ";
 		
 	}
-	public void interpret(LinkedList<GToken> input,GToken start)//takes in a goddamn stack n a fucking input
+	public boolean interpret(LinkedList<GToken> input,GToken start)//takes in a goddamn stack n a fucking input
 	{
 		//stack starts with start token/symbol and an ending symbol
 		LinkedList<GToken> stack=new LinkedList<GToken>();
 		GToken end=new GToken("<END_STRING>",true);
 		stack.addFirst(end);
 		stack.addFirst(start);
-		while(!stack.get(0).equals(end))//fix
+		int j=0;
+		while(!stack.get(0).equals(end)&&j<40000)//fix
 		{
+			j++;
 			GToken compare=stack.get(0);//is this zero?
 			GRule toRun=getCell(compare,input.pop());//this shit all psudo, should
 			//be the compare thingy colum goto row.
@@ -83,7 +85,9 @@ public class ParseTable
 				stack.addFirst(toRun.tokenList.get(i));
 				i--;
 			}
+			if(j==39998) return false;
 		}
+		return true;
 		
 	}
 }
