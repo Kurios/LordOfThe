@@ -10,7 +10,7 @@ public class Grammer {
 	public LinkedList<GRule> rules = new LinkedList<GRule>();
 	public Grammer(File grammer, Spec s) {
 		// TODO Generate LL(1) Parser
-		tokens.add(new GToken("<epsilon>",true));
+		tokens.add(new GToken("<epsilon>",false));
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(grammer));
 			String line = reader.readLine();
@@ -50,7 +50,9 @@ public class Grammer {
 			System.out.println(tokens);
 			System.out.println(start);
 			makeFirstAndFollowSet();
-			System.out.println(tokens);
+			System.out.println("HALP ME: " + tokens.get(1));
+			
+			//System.out.println(tokens);
 			reader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -64,7 +66,11 @@ public class Grammer {
 	public void makeFirstAndFollowSet(){
 		ArrayList<GToken> nullable = new ArrayList<GToken>();
 		for(GToken t : tokens){
-			if(t.isTerminal()) t.first.add(t);
+			if(t.isTerminal()){
+				t.first.clear();
+				t.follow.clear();
+				t.first.add(t);
+			}
 			else {
 				t.first.clear();
 				t.follow.clear();
@@ -76,16 +82,16 @@ public class Grammer {
 			followChanged = false;
 			nullChanged = false;
 			for(GRule rule: rules){
-				GToken head = rule.tokenList.get(0);
+				GToken head = rule.self;
 				GRule r = rule;
-				r.tokenList.remove(0);
-				int headIndex = tokens.indexOf(head);
 				
-				//if k=0 then nullable = nullable union x
-				if(r.tokenList.size() == 0) {
+				int headIndex = indexOfToken(head);
+				int k = r.tokenList.size() - 1;
+				//if k=1 then nullable = nullable union x
+				if(k == 0) {
 					nullable.add(head);
 					nullChanged = true;
-					continue;
+					
 				}
 				
 				//if {Y(1),...,Y(k)} subset of nullable then nullable = nullable union x
@@ -96,12 +102,10 @@ public class Grammer {
 				if(subsetOfNullable) {
 					nullable.add(head);
 					nullChanged = true;
-					continue;
+					
 				}
 				
 				
-				
-				int k = r.tokenList.size() - 1;
 				//for i = 1 to k   except we subtracted 1 from both i and k
 				for(int i = 0; i <= k; i++){
 					//for j = i+1 to k
@@ -128,7 +132,7 @@ public class Grammer {
 							if(!nullable.contains(r.tokenList.get(ind))) subsetOfNull = false;
 						}
 						if(i == k || subsetOfNull){
-							int yIndex = tokens.indexOf(r.tokenList.get(i));
+							int yIndex = indexOfToken(r.tokenList.get(i));
 							for(GToken t : tokens.get(headIndex).follow){
 								if(!tokens.get(yIndex).follow.contains(t)){
 									tokens.get(yIndex).follow.add(t);
@@ -144,11 +148,11 @@ public class Grammer {
 							if(!nullable.contains(r.tokenList.get(ind))) subsetOfNull = false;
 						}
 						if(i+1 == j || subsetOfNull){
-							int iIndex = tokens.indexOf(r.tokenList.get(i));
-							int jIndex = tokens.indexOf(r.tokenList.get(j));
+							int iIndex = indexOfToken(r.tokenList.get(i));
+							int jIndex = indexOfToken(r.tokenList.get(j));
 							for(GToken t : tokens.get(jIndex).first){
 								if(!tokens.get(iIndex).follow.contains(t)){
-									tokens.get(iIndex).follow.addLast(t);
+									tokens.get(iIndex).follow.add(t);
 									followChanged = true;
 								}
 							}
@@ -165,7 +169,12 @@ public class Grammer {
 		
 	}
 	
-	
+	public int indexOfToken(GToken token){
+		for(int i = 0; i< tokens.size(); i++){
+			if(token.equals(tokens.get(i))) return i;
+		}
+		return -1;
+	}
 	
 	//Sources:
 	//    http://www.jflap.org/tutorial/grammar/LL/
