@@ -404,6 +404,8 @@ int main(int argc, char **argv)
 				
 			}
 			System.out.println(queue);
+			ParseTable table = new ParseTable(tokens, rules, new GToken("<epsilon>",false));
+			return table.interpret(queue, start);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
