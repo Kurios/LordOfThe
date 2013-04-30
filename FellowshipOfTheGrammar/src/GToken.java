@@ -20,6 +20,8 @@ public class GToken extends SpecToken {
 
   LinkedList<GToken> first = new LinkedList<GToken>();
   LinkedList<GToken> follow = new LinkedList<GToken>();
+  
+  boolean firstSetMade = false;
 
   //Rules beginning with this token (i.e. A ::= stuff* stores in token A)
   ArrayList<GRule> rules = new ArrayList<GRule>();

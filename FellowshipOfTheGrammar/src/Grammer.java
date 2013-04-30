@@ -49,7 +49,9 @@ public class Grammer {
 			System.out.println(start);
 			System.out.println(tokens);
 			System.out.println(start);
-			//makeFirstAndFollowSet();
+			for(GToken t: tokens){
+				createFirstSet(t);
+			}
 			System.out.println(start.rules);
 			System.out.println("HALP ME: " + tokens.get(1));
 			
@@ -168,6 +170,41 @@ public class Grammer {
 			}
 		}
 		
+	}
+	
+	public void createFirstSet(GToken t){
+			if(t.firstSetMade) return;
+			for(GRule r : t.rules){
+				if(r.tokenList.get(0).token.equalsIgnoreCase("<epsilon>")){
+					t.first.add(r.tokenList.get(0));
+					continue;
+				}
+				for(GToken rt: r.tokenList){
+					if(rt.isTerminal()){
+						t.first.add(rt);
+					}
+					else if(!rt.firstSetMade){
+						createFirstSet(rt);
+						for(GToken f : rt.first){
+							if(t.first.contains(f)) continue;
+							else t.first.add(f);
+						}
+						if(!rt.first.contains(new GToken("<epsilon>", false))){
+							break;
+						}
+					}
+					else {
+						for(GToken f : rt.first){
+							if(t.first.contains(f)) continue;
+							else t.first.add(f);
+						}
+						if(!rt.first.contains(new GToken("<epsilon>", false))){
+							break;
+						}
+					}
+				}
+			}
+			t.firstSetMade = true;
 	}
 	
 	public int indexOfToken(GToken token){
