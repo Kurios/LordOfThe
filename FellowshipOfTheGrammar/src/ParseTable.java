@@ -61,4 +61,20 @@ public class ParseTable
 		return " ";
 		
 	}
+	public void interpret()//takes in a goddamn stack n a fucking input
+	{
+		//stack starts with start token/symbol and an ending symbol
+		while(stack.get(0)!=endingThingy)//fix
+		{
+			GToken compare=stack.get(0);//is this zero?
+			GRule toRun=getCell(compare,input(0))//this shit all psudo, should
+			//be the compare thingy colum goto row.
+			//push the shit onto the stack
+			for (GToken t:toRun.tokenList)
+			{
+				stack.add(t);
+			}
+		}
+		
+	}
 }
