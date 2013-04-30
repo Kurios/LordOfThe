@@ -60,9 +60,14 @@ public class Grammer {
 			for(GToken t: tokens){
 				createFirstSet(t);
 			}
+			for(int ind = 0; ind < 100; ind++){
+				for(GRule r: rules){
+					createFollowSet(r);
+				}
+			}
 			System.out.println(start.rules);
-			System.out.println("\nHALP ME\n" + tokens.get(24));
-			System.out.println("" + tokens.get(24).follow);
+			System.out.println("\nHALP ME\n" + tokens.get(25));
+			System.out.println("" + tokens.get(25).follow);
 			
 			//System.out.println(tokens);
 			reader.close();
