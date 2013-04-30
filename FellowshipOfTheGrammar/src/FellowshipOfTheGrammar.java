@@ -24,7 +24,7 @@ public class FellowshipOfTheGrammar {
 		}
 		else if(args.length != 3)
 		{
-			System.out.println("We need 3 input files");
+			System.out.println("We need 3 input files in the format <Grammar> <Spec> <Script>");
 			return;
 		}
 
