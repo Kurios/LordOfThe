@@ -31,7 +31,9 @@ public class REPrimitiveFragment {
 		{
 			if(charArray[i] == '\\')
 			{
-				
+				i++;
+				last = charArray[i];
+				chars[charArray[i]-32] = assignment;
 			}else if(charArray[i] == '-'){
 				i++;
 				while(last != charArray[i])

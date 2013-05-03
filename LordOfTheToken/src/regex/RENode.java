@@ -113,7 +113,7 @@ public class RENode {
 				regex = regex.substring(1);
 			default  :	
 				//for(i = 1; i < regex.length() && regex.charAt(i) != ']' ; i++);
-				frag = new REPrimitiveFragment(regex.substring(0, 1));
+				frag = new REPrimitiveFragment("\\"+regex.substring(0, 1));
 				node = new RENode();
 				transitions.add(frag);
 				states.add(node);

@@ -78,6 +78,7 @@ public class ParseTable
 			//push the shit onto the stack
 			//for (GToken t:toRun.tokenList)
 			//for(int i=toRun.tokenList.size()-1;i<0;i--)
+			if(toRun == null) return true;
 			int i=toRun.tokenList.size()-1;
 			while(i>0)
 			{
