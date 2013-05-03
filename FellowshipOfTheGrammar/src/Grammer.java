@@ -58,6 +58,11 @@ public class Grammer {
 			System.out.println(tokens);
 			System.out.println(start);
 			for(GToken t: tokens){
+				t.first.clear();
+				if(!t.terminal)t.follow.clear();
+				if(t.terminal)t.first.add(t);
+			}
+			for(GToken t: tokens){
 				createFirstSet(t);
 			}
 			for(int ind = 0; ind < 100; ind++){
